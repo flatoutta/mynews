@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\News;
-// lesson17 以下二行
 use App\History;
 
 use Carbon\Carbon;
-
+use Storage; //追加
 class NewsController extends Controller
 {
   public function add()
@@ -27,8 +26,8 @@ class NewsController extends Controller
 
 // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する    
     if (isset($form['image'])) {
-      $path = $request->file('image')->store('public/image');
-      $news->image_path = basename($path);
+      $path = Storage::disk('s3')->putFile('/',$form['image'],'public');
+      $news->image_path = Storage::disk('s3')->url($path);
     }else{
       $news->image_path = null;
     }
@@ -70,8 +69,8 @@ class NewsController extends Controller
     $form = $request->all();
 
     if (isset($form['image'])) {
-      $path = $request->file('image')->store('public/image');
-      $news->image_path = basename($path);
+      $path = Storage::disk('s3')->putFile('/',$form['image'],'public');
+      $news->image_path = Storage::disk('s3')->url($path);
       unset($form['image']);
     }elseif(isset($form['remove'])) {
       $news->image_path = null;
