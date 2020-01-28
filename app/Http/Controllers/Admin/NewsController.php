@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 
 use App\News;
 use App\History;
-use App\User;
 
 use Carbon\Carbon;
 use Storage; //追加
@@ -28,8 +27,8 @@ class NewsController extends Controller
     $news = new News;
     $form = $request->all();
     // ログイン中のユーザーのIDを格納    
-    $news->user_id = Auth::user('id');
-
+    $news->user_id = Auth::id();
+    
 // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する    
     if (isset($form['image'])) {
       $path = Storage::disk('s3')->putFile('/',$form['image'],'public');
@@ -42,7 +41,7 @@ class NewsController extends Controller
     unset($form['image']);
 
     $news->fill($form);
-    dd($news);
+
     $news->save();
         
     return redirect('admin/news/create');
