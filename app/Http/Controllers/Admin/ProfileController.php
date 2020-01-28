@@ -68,13 +68,5 @@ class ProfileController extends Controller
     $profile->delete();
     return redirect('admin/news/');
   }  
-
-  public function show(Request $request)
-  {
-    $this->validate($request, Profile::$rules);
-    $profile = Profile::find($request->id);
-    $profile_form = $request->all();
-
-    return view('admin.profile.show', ['profile_form' => $profile]);
-  }
+  
 }

@@ -18,4 +18,9 @@ class News extends Model
         return $this->hasMany('App\History');
         
     }
+        public function users()
+    {
+        return $this->hasMany('App\User');
+    }
+
 }

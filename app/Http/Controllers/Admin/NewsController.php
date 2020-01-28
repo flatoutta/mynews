@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 
 use App\News;
 use App\History;
+use App\User;
 
 use Carbon\Carbon;
 use Storage; //追加
+use Auth;
+
 class NewsController extends Controller
 {
   public function add()
@@ -19,10 +22,13 @@ class NewsController extends Controller
   
   public function create(Request $request)
   {
+
     $this->validate($request, News::$rules);
     
     $news = new News;
     $form = $request->all();
+    // ログイン中のユーザーのIDを格納    
+    $news->user_id = Auth::user('id');
 
 // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する    
     if (isset($form['image'])) {
@@ -36,10 +42,12 @@ class NewsController extends Controller
     unset($form['image']);
 
     $news->fill($form);
+    dd($news);
     $news->save();
-    
+        
     return redirect('admin/news/create');
   }
+  
   public function index(Request $request)
   {
     $cond_title = $request->cond_title;
