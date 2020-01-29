@@ -22,10 +22,7 @@ class ProfileController extends Controller
     
     public function show(Request $request)
     {
-    $this->validate($request, Profile::$rules);
-    $profile = Profile::find($request->id);
-    $profile_form = $request->all();
-    
-    return view('admin.profile.show', ['profile_form' => $profile]);
+        $profile = Profile::where('user_id', $request->user_id)->first();
+        return view('profiles.show', ['profile' => $profile]);
     }
 }

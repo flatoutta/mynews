@@ -10,7 +10,7 @@ use App\History;
 
 use Carbon\Carbon;
 use Storage; //追加
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {

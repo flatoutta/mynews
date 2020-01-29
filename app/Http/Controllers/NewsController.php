@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\HTML;
 
 use App\News;
 
+
 class NewsController extends Controller
 {
     public function index(Request $request)

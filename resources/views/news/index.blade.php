@@ -22,6 +22,9 @@
                         <div class="col-md-6">
                             <p class="body mx-auto">{{ str_limit($headline->body, 650) }}</p>
                         </div>
+                        <div class="col-md-6">
+                            <a href="{{ action('ProfileController@show', ['user_id' => $headline->user_id]) }}">著者のプロフィール</a>
+                        </div>
                     </div>
                 </div>
             </div>

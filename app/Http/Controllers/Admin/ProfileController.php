@@ -11,6 +11,8 @@ use App\Profilehistory;
 
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Auth;
+
 class ProfileController extends Controller
 {
     //
@@ -29,6 +31,8 @@ class ProfileController extends Controller
 
 // フォームから送信されてきた_tokenを削除する    
     unset($form['_token']);
+    
+    $profile->user_id = Auth::id();
 
 // データベースに保存する    
     $profile->fill($form)->save();
